@@ -7,11 +7,10 @@ from service.environment_service import EnvironmentService
 from util.logging import logger
 from json import loads
 
-SESSION_HEADER_KEY = 'x-dali-session'
-
 # instances
 environment_dao = EnvironmentDAO(session)
 environment_service = EnvironmentService(environment_dao)
+
 
 @app.route('/api/v1/environments', methods=['POST'])
 def create_environment():
@@ -33,7 +32,6 @@ def list_environments():
 
 @app.route('/api/v1/environments/<environment_id>', methods=['GET', 'DELETE', 'PUT'])
 def single_environment_actions(environment_id):
-    # _check_session(request)
     if request.method == 'GET':
         logger.info("Received a request to get the environment")
         return environment_service.get_environment(environment_id).to_dict(), 200
